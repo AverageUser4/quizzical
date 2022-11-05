@@ -5,10 +5,10 @@ import Quizz from './components/Quizz';
 
 export default function App() {
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [availableCategories, setAvailableCategories] =  React.useState([]);
+  const [availableCategories, setAvailableCategories] =  React.useState([{ id: '', name: 'All' }]);
 
   const [questionsMetaData, setQuestionsMetaData] = React.useState({
-    count: 10,
+    count: 5,
     category: ''
   });
 

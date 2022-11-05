@@ -34,7 +34,11 @@ export default function Question(props) {
   return (
     <div className="question">
 
-      <h4 className="question__text">{decodeHTML(props.questionData.question)}</h4>
+      <h4 className="question__text">
+        {decodeHTML(props.questionData.question)}
+        {!props.questionData.answers.some((a) => a.isChosen) && 
+          <span className="question__unanswered-mark">*</span>}
+      </h4>
 
       <ul className="question__answers">
 

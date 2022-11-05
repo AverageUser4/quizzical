@@ -9,10 +9,27 @@ import Question from './Question';
 export default function Quizz(props) {
   const [questionsData, setQuestionsData] = React.useState([]);
   const [quizzOver, setQuizzOver] = React.useState(false);
+  const [confirmationModalVisible, setConfirmationModalVisible] = React.useState(false);
 
   React.useEffect(() => {
     populateWithNewQuestions();
   }, []);
+
+  React.useEffect(() => {
+    const toggle = (event) => {
+      if(event.key !== 'Escape')
+        return;
+      
+      if(quizzOver)
+        props.toggleQuizz();
+      else
+        setConfirmationModalVisible((prev) => !prev);
+    }
+
+    window.addEventListener('keydown', toggle);
+
+    return () => window.removeEventListener('keydown', toggle);
+  }, [quizzOver]);
 
   const questionElements = questionsData.map((questionData) => {
     return (
@@ -113,8 +130,30 @@ export default function Quizz(props) {
     return score;
   }
 
+  function startNewQuizz() {
+    if(quizzOver || confirmationModalVisible)
+      props.toggleQuizz();
+    else
+      setConfirmationModalVisible(true);
+  }
+
   return (
     <div className="quizz">
+
+      {confirmationModalVisible && 
+        <div className="confirmation-modal">
+
+          <h1>Are you sure you want to quit?</h1>
+
+          <div className="confirmation-modal__buttons">
+
+            <button className="button" onClick={startNewQuizz}>Yes, I really mean it</button>
+            <button className="button" onClick={() => setConfirmationModalVisible(false)}>No, it was a mistake</button>
+
+          </div>
+
+        </div>
+      }
 
       {questionsData.length === 0 ? <h1 style={{textAlign: 'center'}}>Loading...</h1> : questionElements}
 
@@ -145,7 +184,7 @@ export default function Quizz(props) {
 
           <button 
             className={`button button--small`}
-            onClick={props.toggleQuizz}
+            onClick={startNewQuizz}
           >
             New quizz
           </button>
@@ -153,7 +192,6 @@ export default function Quizz(props) {
         </div>
         
       }
-
 
     </div>
   );
