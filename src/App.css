@@ -10,6 +10,18 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 150%;
 }
 
+select, input[type=number] {
+  padding: 0.4em 1.4em;
+
+  background-color: transparent;
+  border: 1px solid #4D5B9E;
+  border-radius: 0.9em;
+  color: #293264;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Inter, sans-serif;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -29,10 +41,16 @@ button:hover {
 .button:hover {
   filter: brightness(110%);
 }
-
 .button--small {
   font-size: 12px;
   font-weight: 600;
+}
+.button--disabled {
+  background-color: #999;
+}
+.button--disabled:hover {
+  cursor: default;
+  filter: none;
 }
 
 .app {
@@ -60,9 +78,22 @@ button:hover {
   margin: 14px 0 26px;
 }
 
-.quizz__button {
-  display: block;
-  margin: 32px auto 0;
+.welcome-screen__options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  margin: 32px 0 0;
+}
+
+.quizz__bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  margin: 32px 0 0;
 }
 
 .question {

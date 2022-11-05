@@ -7,10 +7,26 @@ export default function Question(props) {
     return ta.value;
   }
 
-  const answerElements = props.answers.map((answer) => {
+  const answerElements = props.questionData.answers.map((answer, index) => {
+    let className = "answer";
+    className += answer.isChosen ? ' answer--chosen' : '';
+    if(props.quizzOver) {
+      className += ' answer--disabled';
+      className += answer.isCorrect ? ' answer--correct' : '';
+      className += !answer.isCorrect && answer.isChosen ? ' answer--wrong' : '';
+    }
+
     return (
       <li key={Math.random()}>
-        <button className="answer">{decodeHTML(answer)}</button>
+
+        <button
+          className={className}
+          onClick={() => props.quizzOver ? () => 1 : 
+            props.chooseAnswer(props.questionData.index, index)}
+        >
+          {decodeHTML(answer.text)}
+        </button>
+
       </li>
     );
   });
@@ -18,7 +34,7 @@ export default function Question(props) {
   return (
     <div className="question">
 
-      <h4 className="question__text">{decodeHTML(props.question)}</h4>
+      <h4 className="question__text">{decodeHTML(props.questionData.question)}</h4>
 
       <ul className="question__answers">
 
